@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Performs game computations.
 struct GameEngine {
     private let queue: DispatchQueue
 
@@ -18,7 +19,7 @@ struct GameEngine {
         self.queue = queue
     }
 
-    func computeWinner(game: Game, completion: @escaping (Player?) -> Void) {
+    func computeGameStatus(game: Game, completion: @escaping (Game.Status) -> Void) {
         queue.async {
             let winner: Player?
 
@@ -32,7 +33,13 @@ struct GameEngine {
                 winner = nil
             }
 
-            completion(winner)
+            if let winner = winner {
+                completion(.over(winner))
+            } else if containsUnownedSquares(game.board) == false {
+                completion(.over(nil))
+            } else {
+                completion(.active)
+            }
         }
     }
 
@@ -71,5 +78,9 @@ struct GameEngine {
         squares.allSatisfy { square in
             square.owner != nil && square.owner == squares.first?.owner
         }
+    }
+
+    private func containsUnownedSquares(_ board: Gameboard) -> Bool {
+        board.flattened().contains { $0.owner == nil }
     }
 }

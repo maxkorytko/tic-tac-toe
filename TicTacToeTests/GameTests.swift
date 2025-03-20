@@ -52,7 +52,20 @@ final class GameTests: XCTestCase {
         XCTAssertFalse(game.selectSquare(row: 99, column: 99))
     }
 
-    func testCheckWinner_rows() {
+    func testGameStatus_active() {
+        var gameStatus: Game.Status?
+        let expectation = XCTestExpectation(description: "Game Status")
+
+        game.checkStatus { status in
+            gameStatus = status
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 1)
+        XCTAssertEqual(gameStatus, .active)
+    }
+
+    func testWinner_rows() {
         (0..<game.board.rows.count).forEach { row in
             makeGame()
 
@@ -70,7 +83,7 @@ final class GameTests: XCTestCase {
         }
     }
 
-    func testCheckWinner_columns() {
+    func testWinner_columns() {
         (0..<game.board.rows.count).forEach { column in
             makeGame()
 
@@ -88,7 +101,7 @@ final class GameTests: XCTestCase {
         }
     }
 
-    func testCheckWinner_diagonals() {
+    func testWinner_diagonals() {
         (0..<game.board.rows.count).forEach { row in
             game.selectSquare(row: row, column: row)
         }
@@ -103,8 +116,38 @@ final class GameTests: XCTestCase {
         assertWinner(player2, game: game)
     }
 
+    func testWinner_noWinner() {
+        (0..<game.board.rows.count).forEach { row in
+            if row == 1 {
+                game.advance()
+            }
+
+            (0..<game.board.rows.count).forEach { column in
+                game.selectSquare(row: row, column: column)
+                game.advance()
+            }
+        }
+
+        var gameStatus: Game.Status?
+        let expectation = XCTestExpectation(description: "Game Status")
+
+        game.checkStatus { status in
+            gameStatus = status
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 1)
+
+        guard case let .over(winner) = gameStatus else {
+            XCTFail("Unexpected game status")
+            return
+        }
+
+        XCTAssertNil(winner)
+    }
+
     private func assertWinner(
-        _ player: Player,
+        _ player: Player?,
         game: Game,
         file: StaticString = #filePath,
         line: UInt = #line
@@ -112,8 +155,11 @@ final class GameTests: XCTestCase {
         var winner: Player?
         let expectation = XCTestExpectation(description: "Check Winner")
 
-        game.checkWinner { player in
-            winner = player
+        game.checkStatus { status in
+            if case let .over(winningPlayer) = status {
+                winner = winningPlayer
+            }
+
             expectation.fulfill()
         }
 

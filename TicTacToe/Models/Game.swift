@@ -10,8 +10,9 @@ import Foundation
 final class Game {
     let player1: Player
     let player2: Player
+    var paused: Bool = false
 
-    private(set) var activePlayer: Player?
+    private(set) var activePlayer: Player
     private let gameEngine: GameEngine
     private(set) var board: Gameboard = .init()
 
@@ -23,6 +24,8 @@ final class Game {
     }
 
     func advance() {
+        if paused { return }
+
         if activePlayer == player1 {
             activePlayer = player2
         } else {
@@ -30,15 +33,17 @@ final class Game {
         }
     }
 
-    func checkWinner(completion: @escaping (Player?) -> Void) {
-        gameEngine.computeWinner(game: self, completion: completion)
+    func checkStatus(completion: @escaping (Game.Status) -> Void) {
+        gameEngine.computeGameStatus(game: self, completion: { status in
+            DispatchQueue.main.async { completion(status) }
+        })
     }
 
     /// Selects a square located in the specified row and column.
     /// - Returns: True if the square has been selected or false otherwise.
     @discardableResult
     func selectSquare(row: Int, column: Int) -> Bool {
-        guard var square = board[row, column] else {
+        guard paused == false, var square = board[row, column] else {
             return false
         }
 
@@ -50,5 +55,12 @@ final class Game {
         board[row, column] = square
 
         return true
+    }
+}
+
+extension Game {
+    enum Status: Equatable {
+        case active
+        case over(Player?)
     }
 }

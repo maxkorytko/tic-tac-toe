@@ -21,6 +21,7 @@
 		559A15012D8C8E8200BE90A4 /* GameboardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559A14FE2D8C8E8200BE90A4 /* GameboardCell.swift */; };
 		559A15022D8C8E8200BE90A4 /* GameboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559A14FF2D8C8E8200BE90A4 /* GameboardViewController.swift */; };
 		559A15182D8C90A100BE90A4 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559A150A2D8C8F1200BE90A4 /* GameTests.swift */; };
+		559A151D2D8CAF0600BE90A4 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559A151C2D8CAF0600BE90A4 /* Array+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		559A15082D8C8F1200BE90A4 /* TicTacToeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		559A150A2D8C8F1200BE90A4 /* GameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
 		559A150C2D8C8F1200BE90A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		559A151C2D8CAF0600BE90A4 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		559A14C82D8B844A00BE90A4 /* TicTacToe */ = {
 			isa = PBXGroup;
 			children = (
+				559A151B2D8CAEED00BE90A4 /* Extensions */,
 				559A14FB2D8C8E3200BE90A4 /* Views */,
 				559A14E52D8BA5FE00BE90A4 /* Models */,
 				559A14C92D8B844A00BE90A4 /* AppDelegate.swift */,
@@ -134,6 +137,14 @@
 				559A150C2D8C8F1200BE90A4 /* Info.plist */,
 			);
 			path = TicTacToeTests;
+			sourceTree = "<group>";
+		};
+		559A151B2D8CAEED00BE90A4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				559A151C2D8CAF0600BE90A4 /* Array+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,6 +250,7 @@
 				559A15012D8C8E8200BE90A4 /* GameboardCell.swift in Sources */,
 				559A14EA2D8BA61C00BE90A4 /* Gameboard.swift in Sources */,
 				559A14E72D8BA60D00BE90A4 /* GameboardSquare.swift in Sources */,
+				559A151D2D8CAF0600BE90A4 /* Array+Extensions.swift in Sources */,
 				559A14F92D8C76B100BE90A4 /* GameEngine.swift in Sources */,
 				559A14CA2D8B844A00BE90A4 /* AppDelegate.swift in Sources */,
 				559A15022D8C8E8200BE90A4 /* GameboardViewController.swift in Sources */,

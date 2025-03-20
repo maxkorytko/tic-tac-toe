@@ -24,22 +24,8 @@ struct Gameboard {
             rows[safe: row]?[safe: column] = newValue
         }
     }
-}
 
-// MARK: - Array
-
-extension Array {
-    subscript(safe index: Array.Index) -> Element? {
-        get {
-            if index >= startIndex, index < endIndex {
-                return self[index]
-            }
-            return nil
-        }
-        set {
-            if let newValue = newValue, index >= startIndex, index < endIndex {
-                self[index] = newValue
-            }
-        }
+    func flattened() -> [Gameboard.Square] {
+        Array(rows.joined())
     }
 }
