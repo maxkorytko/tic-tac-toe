@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Game View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="GameViewController" customModule="TicTacToe" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nL6-fN-PEE">
+                                <rect key="frame" x="184" y="723" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="geJ-fU-USn">
+                                <rect key="frame" x="186" y="153" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w8P-XZ-i3g">
+                                <rect key="frame" x="0.0" y="198" width="414" height="500"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="500" id="yJa-fD-R2h"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="dZ7-t8-aqG" kind="embed" identifier="Gameboard" id="kvM-1L-bF0"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="nL6-fN-PEE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="62g-Ig-uRU"/>
+                            <constraint firstItem="w8P-XZ-i3g" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ETl-GZ-bTr"/>
+                            <constraint firstItem="geJ-fU-USn" firstAttribute="bottom" secondItem="w8P-XZ-i3g" secondAttribute="top" constant="-24" id="JT7-x6-uTr"/>
+                            <constraint firstItem="w8P-XZ-i3g" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="MwC-xq-rrx"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="w8P-XZ-i3g" secondAttribute="trailing" id="bCs-Vc-vuP"/>
+                            <constraint firstItem="geJ-fU-USn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rQR-qO-Jbf"/>
+                            <constraint firstItem="nL6-fN-PEE" firstAttribute="top" secondItem="w8P-XZ-i3g" secondAttribute="bottom" constant="25" id="xrz-cd-xvP"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="button" destination="nL6-fN-PEE" id="yWN-s0-uPV"/>
+                        <outlet property="statusLabel" destination="geJ-fU-USn" id="oNz-Lq-YDO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-197" y="61"/>
+        </scene>
+        <!--Gameboard View Controller-->
+        <scene sceneID="7LJ-3U-ILp">
+            <objects>
+                <viewController id="dZ7-t8-aqG" customClass="GameboardViewController" customModule="TicTacToe" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qVN-JJ-KdD">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="500"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="yci-pH-A5M">
+                                <rect key="frame" x="0.0" y="44" width="414" height="456"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="BVR-7r-Jqx">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GameboardCell" id="ALU-uu-dEf" customClass="GameboardCell" customModule="TicTacToe" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0Yh-rT-pGp">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="WTx-RS-oOM"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="WTx-RS-oOM" firstAttribute="bottom" secondItem="yci-pH-A5M" secondAttribute="bottom" id="Dkf-01-WP0"/>
+                            <constraint firstItem="yci-pH-A5M" firstAttribute="top" secondItem="WTx-RS-oOM" secondAttribute="top" id="gL4-Sr-0sX"/>
+                            <constraint firstItem="yci-pH-A5M" firstAttribute="leading" secondItem="WTx-RS-oOM" secondAttribute="leading" id="tR7-Ok-6Ng"/>
+                            <constraint firstItem="yci-pH-A5M" firstAttribute="trailing" secondItem="WTx-RS-oOM" secondAttribute="trailing" id="xgv-c8-qXC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="yci-pH-A5M" id="5K9-am-TGE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W6o-Kv-hqr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="686" y="61"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
