@@ -39,10 +39,10 @@ struct GameEngine {
     private func columns(_ board: Gameboard) -> [[Gameboard.Square]] {
         var transposedRows = board.rows
 
-        (0..<board.rows.count).forEach { rowIndex in
-            (rowIndex..<board.rows[rowIndex].count).forEach { columnIndex in
-
-                transposedRows[columnIndex][rowIndex] = board.rows[rowIndex][columnIndex]
+        (0..<board.rows.count).forEach { row in
+            (row..<board.rows[row].count).forEach { column in
+                transposedRows[row][column] = board.rows[column][row]
+                transposedRows[column][row] = board.rows[row][column]
             }
         }
 
@@ -53,14 +53,14 @@ struct GameEngine {
         var squares = [[Gameboard.Square]]()
 
         squares.append({
-            (0..<board.rows.count).compactMap { rowIndex -> Gameboard.Square? in
-                board[rowIndex, rowIndex]
+            (0..<board.rows.count).compactMap { row -> Gameboard.Square? in
+                board[row, row]
             }
         }())
 
         squares.append({
-            (0..<board.rows.count).compactMap { rowIndex -> Gameboard.Square? in
-                board[rowIndex, board.rows.count - rowIndex - 1]
+            (0..<board.rows.count).compactMap { row -> Gameboard.Square? in
+                board[row, board.rows.count - row - 1]
             }
         }())
 
@@ -69,7 +69,7 @@ struct GameEngine {
 
     private func allMatchingSquares(_ squares: [Gameboard.Square]) -> Bool {
         squares.allSatisfy { square in
-            square.owner == squares.first?.owner
+            square.owner != nil && square.owner == squares.first?.owner
         }
     }
 }

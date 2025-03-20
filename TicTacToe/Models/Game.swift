@@ -11,11 +11,12 @@ final class Game {
     let player1: Player
     let player2: Player
 
-    private var activePlayer: Player?
-    private let gameEngine: GameEngine = .init()
+    private(set) var activePlayer: Player?
+    private let gameEngine: GameEngine
     private(set) var board: Gameboard = .init()
 
-    init(player1: Player, player2: Player) {
+    init(gameEngine: GameEngine = .init(), player1: Player, player2: Player) {
+        self.gameEngine = gameEngine
         self.player1 = player1
         self.player2 = player2
         self.activePlayer = player1
@@ -33,9 +34,9 @@ final class Game {
         gameEngine.computeWinner(game: self, completion: completion)
     }
 
-
     /// Selects a square located in the specified row and column.
     /// - Returns: True if the square has been selected or false otherwise.
+    @discardableResult
     func selectSquare(row: Int, column: Int) -> Bool {
         guard var square = board[row, column] else {
             return false
