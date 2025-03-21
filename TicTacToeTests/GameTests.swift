@@ -21,7 +21,7 @@ final class GameTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        gameEngine = GameEngine(queue: .main)
+        gameEngine = GameEngine()
         makeGame()
     }
 

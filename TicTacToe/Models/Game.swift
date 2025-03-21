@@ -34,9 +34,7 @@ final class Game {
     }
 
     func checkStatus(completion: @escaping (Game.Status) -> Void) {
-        gameEngine.computeGameStatus(game: self, completion: { status in
-            DispatchQueue.main.async { completion(status) }
-        })
+        gameEngine.computeGameStatus(game: self, completion: completion)
     }
 
     /// Selects a square located in the specified row and column.

@@ -9,36 +9,71 @@ import Foundation
 
 /// Performs game computations.
 struct GameEngine {
-    private let queue: DispatchQueue
+    private let resultQueue: DispatchQueue
+    private let workQueue: DispatchQueue
 
-    private static func createQueue() -> DispatchQueue {
-        DispatchQueue(label: "GameEngineQueue")
+    init(
+        workQueue: DispatchQueue = DispatchQueue.global(qos: .userInitiated)
+    ) {
+        self.resultQueue = DispatchQueue(label: "\(String(describing: Self.self))-ResultQueue")
+        self.workQueue = workQueue
     }
 
-    init(queue: DispatchQueue = Self.createQueue()) {
-        self.queue = queue
-    }
+    func computeGameStatus(
+        game: Game,
+        completionQueue: DispatchQueue = .main,
+        completion: @escaping (Game.Status) -> Void
+    ) {
+        var winner: Player?
+        let dispatchGroup = DispatchGroup()
 
-    func computeGameStatus(game: Game, completion: @escaping (Game.Status) -> Void) {
-        queue.async {
-            let winner: Player?
-
-            if let winningRow = game.board.rows.first(where: allMatchingSquares) {
-                winner = winningRow.first?.owner
-            } else if let winningColumn = columns(game.board).first(where: allMatchingSquares) {
-                winner = winningColumn.first?.owner
-            } else if let winningDiagonal = diagonals(game.board).first(where: allMatchingSquares) {
-                winner = winningDiagonal.first?.owner
-            } else {
-                winner = nil
+        // Check rows.
+        dispatchGroup.enter()
+        workQueue.async {
+            if
+                let winningRow = game.board.rows.first(where: allMatchingSquares),
+                let owner = winningRow.first?.owner
+            {
+                resultQueue.async {
+                    winner = owner
+                }
             }
+            dispatchGroup.leave()
+        }
 
+        // Check columns.
+        dispatchGroup.enter()
+        workQueue.async {
+            if
+                let winningColumn = columns(game.board).first(where: allMatchingSquares),
+                let owner = winningColumn.first?.owner {
+                resultQueue.async {
+                    winner = owner
+                }
+            }
+            dispatchGroup.leave()
+        }
+
+        // Check diagonals.
+        dispatchGroup.enter()
+        workQueue.async {
+            if
+                let winningDiagonal = diagonals(game.board).first(where: allMatchingSquares),
+                let owner = winningDiagonal.first?.owner {
+                resultQueue.async {
+                    winner = owner
+                }
+            }
+            dispatchGroup.leave()
+        }
+
+        dispatchGroup.notify(queue: resultQueue) {
             if let winner = winner {
-                completion(.over(winner))
+                completionQueue.async { completion(.over(winner)) }
             } else if containsUnownedSquares(game.board) == false {
-                completion(.over(nil))
+                completionQueue.async { completion(.over(nil)) }
             } else {
-                completion(.active)
+                completionQueue.async { completion(.active) }
             }
         }
     }
